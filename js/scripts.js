@@ -34,4 +34,11 @@ var pokemonList = [
     creatureTypes : ['bug', 'poison'],
     cratureAbilities : ['shield-dust', 'run-away'],
   }
-]
+];
+
+for (var i = 0; i < pokemonList.length; i++) {
+  document.write('<p>' + pokemonList[i].creatureName + ' (' + 'height: ' + pokemonList[i].creatureHeight + ')' + '</p>')
+  if (pokemonList[i].creatureHeight >= 0.7) {
+    document.write( '- Wow, that\'s big!')
+  }
+}
