@@ -43,7 +43,6 @@ for (var i = 0; i < pokemonList.length; i++) {
     document.write( '- Wow, that\'s big!')
   }
 }
-*/
 
 Object.keys(pokemonList).forEach(function (property) {
   document.write('Name : ' + pokemonList[property].creatureName + '<br>');
@@ -51,5 +50,15 @@ Object.keys(pokemonList).forEach(function (property) {
   document.write('Weight : ' + pokemonList[property].creatureWeight + '<br>');
   document.write('Types : ' + pokemonList[property].creatureTypes + '<br>');
   document.write('Abilities : ' + pokemonList[property].creatureAbilities + '<br>');
+  document.write('<br>');
+});　
+*/
+
+pokemonList.forEach(pokemon => {
+  document.write('Name : ' + pokemon.creatureName + '<br>');
+  document.write('Height : ' + pokemon.creatureHeight + '<br>');
+  document.write('Weight : ' + pokemon.creatureWeight + '<br>');
+  document.write('Types : ' + pokemon.creatureTypes + '<br>');
+  document.write('Abilities : ' + pokemon.creatureAbilities + '<br>');
   document.write('<br>');
 });
