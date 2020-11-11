@@ -55,6 +55,15 @@ var pokemonRepository = (function () {
   };
 })();
 
+//added an item to the repository
+pokemonRepository.add({
+  creatureName : 'Pidgey',
+  creatureHeight : 0.3,
+  creatureWeight : 1.8,
+  creatureTypes : ['flying', 'normal'],
+  cratureAbilities : ['keen-eye', 'Tangled-feet', 'big-pecks']
+});
+
 var pokemonList = pokemonRepository.getAll();
 
 //simplified the forEach function
