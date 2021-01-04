@@ -48,11 +48,40 @@ var pokemonRepository = (function () {
     pokemonList.push(item);
   }
 
+  //create a function
+  function addListItem(pokemon){
+    //create a variable
+    var pokemonList = document.querySelector('.pokemon-list');
+    //create an li element
+    var listPokemon = document.createElement('li');
+    //create a button element
+    var button = document.createElement('button');
+    //add an event listener to the button
+    button.addEventListener('click', function () {
+      showDetails (pokemon);
+    });
+    //set innerText to be the Pokemon's name
+    button.innerText = pokemon.creatureName;
+    //add a class to the button
+    button.classList.add('pokemonList-button');
+    //append the Button
+    listPokemon.appendChild(button);
+    //append the list item to the unordered list
+    pokemonList.appendChild(listPokemon);
+  }
+
+  //create a function
+  function showDetails(pokemon){
+    console.log(pokemon);
+  }
+
   //return all functions
   return {
     getAll: getAll,
-    add: add
+    add: add,
+    addListItem: addListItem
   };
+
 })();
 
 //added an item to the repository
@@ -66,12 +95,9 @@ pokemonRepository.add({
 
 var pokemonList = pokemonRepository.getAll();
 
-//simplified the forEach function
+console.log(pokemonRepository.getAll());
+
+//forEach function
 pokemonList.forEach(pokemon => {
-  document.write('Name : ' + pokemon.creatureName + '<br>');
-  document.write('Height : ' + pokemon.creatureHeight + '<br>');
-  document.write('Weight : ' + pokemon.creatureWeight + '<br>');
-  document.write('Types : ' + pokemon.creatureTypes + '<br>');
-  document.write('Abilities : ' + pokemon.creatureAbilities + '<br>');
-  document.write('<br>');
+  pokemonRepository.addListItem(pokemon);
 });
