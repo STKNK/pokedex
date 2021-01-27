@@ -1,103 +1,94 @@
 // create a new pokemonRepository variable
 var pokemonRepository = (function () {
-  var pokemonList = [
-    {
-      creatureName : 'bulbasaur',
-      creatureHeight : 0.7,
-      creatureWeight : 6.9,
-      creatureTypes : ['grass', 'poison'],
-      cratureAbilities : ['chlorophyll', 'overgrow'],
-    },
-    {
-      creatureName : 'charmander',
-      creatureHeight : 0.6,
-      creatureWeight : 8.5,
-      creatureTypes : ['fire'],
-      cratureAbilities : ['blaze', 'solar-power'],
-    },
-    {
-      creatureName : 'squirtle',
-      creatureHeight : 0.5,
-      creatureWeight : 9,
-      creatureTypes : ['water'],
-      cratureAbilities : ['rain-dish', 'torrent'],
-    },
-    {
-      creatureName : 'caterpie',
-      creatureHeight : 0.3,
-      creatureWeight : 2.9,
-      creatureTypes : ['bug'],
-      cratureAbilities : ['shield-dust', 'run-away'],
-    },
-    {
-      creatureName : 'weedle',
-      creatureHeight : 0.3,
-      creatureWeight : 3.2,
-      creatureTypes : ['bug', 'poison'],
-      cratureAbilities : ['shield-dust', 'run-away'],
-    }
-  ];
+  //pokemonList array is empty
+  var pokemonList = [];
+  //URL of the API
+  var apiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
-  //returns an array of Pokemon
-  function getAll(){
+  //returns pokemonList array
+  function getAll() {
     return pokemonList;
   }
 
-  //add a single item to the pokemonList array
-  function add(item){
-    pokemonList.push(item);
+  //adds the pokemon object to the pokemonList array
+  function add(pokemon) {
+    pokemonList.push(pokemon);
   }
 
-  //create a function
+  //fetch data from the API, then uses it to populate the pokemonList array
+  function loadList() {
+    return fetch(apiUrl).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      json.results.forEach(function (item) {
+        var pokemon = {
+          name: item.name,
+          detailsUrl: item.url
+        };
+        add(pokemon);
+      });
+    }).catch(function (e) {
+      console.error(e);
+    });
+  }
+
+  //create a button for the pokemon object and appends this button to the button list
   function addListItem(pokemon){
     //create a variable
-    var pokemonList = document.querySelector('.pokemon-list');
+    var buttonsList = document.querySelector('.pokemon-list');
     //create an li element
-    var listPokemon = document.createElement('li');
+    var listItem = document.createElement('li');
     //create a button element
     var button = document.createElement('button');
+    //set innerText to be the Pokemon's name
+    button.innerText = pokemon.name;
     //add an event listener to the button
     button.addEventListener('click', function () {
       showDetails (pokemon);
     });
-    //set innerText to be the Pokemon's name
-    button.innerText = pokemon.creatureName;
+
     //add a class to the button
-    button.classList.add('pokemonList-button');
+    button.classList.add('pokemon-button');
     //append the Button
-    listPokemon.appendChild(button);
+    listItem.appendChild(button);
     //append the list item to the unordered list
-    pokemonList.appendChild(listPokemon);
+    buttonsList.appendChild(listItem);
   }
 
-  //create a function
+  //calls loadDetails to the fetch additional details for the pokemon object then logs it to the console
   function showDetails(pokemon){
-    console.log(pokemon);
+    loadDetails(pokemon).then(function () {
+      console.log(pokemon);
+    });
+  }
+
+  //fetches additional details using the detailsUrl of the pokemon object (referred to as item) then adds them to it
+  function loadDetails(item) {
+    var url = item.detailsUrl;
+    return fetch(url).then(function (response) {
+      return response.json();
+    }).then(function (details) {
+      item.imageUrl = details.sprites.front_default;
+      item.height = details.height;
+      item.types = details.types;
+    }).catch(function (e) {
+      console.error(e);
+    });
   }
 
   //return all functions
   return {
     getAll: getAll,
     add: add,
-    addListItem: addListItem
+    loadList: loadList,
+    addListItem: addListItem,
+    showDetails: showDetails,
+    loadDetails: loadDetails
   };
-
 })();
 
-//added an item to the repository
-pokemonRepository.add({
-  creatureName : 'Pidgey',
-  creatureHeight : 0.3,
-  creatureWeight : 1.8,
-  creatureTypes : ['flying', 'normal'],
-  cratureAbilities : ['keen-eye', 'Tangled-feet', 'big-pecks']
-});
-
-var pokemonList = pokemonRepository.getAll();
-
-console.log(pokemonRepository.getAll());
-
-//forEach function
-pokemonList.forEach(pokemon => {
-  pokemonRepository.addListItem(pokemon);
+pokemonRepository.loadList().then(function() {
+  pokemonRepository.getAll().forEach(function(pokemon) {
+    pokemonRepository.addListItem(pokemon);
+  });
 });
