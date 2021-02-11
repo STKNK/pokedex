@@ -25,6 +25,32 @@ h1 {
   text-transform: capitalize;
 }
 
+h2 {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 30px;
+  margin: 20px 0 0 0;
+  letter-spacing: var(--main-letter-spacing);
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: var(--main-letter-spacing);
+  text-transform: capitalize;
+}
+
+p {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: var(--main-font-weight);
+  margin: 0;
+  color: var(--main-txt-color);
+  letter-spacing: var(--main-letter-spacing);
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -35,6 +61,10 @@ li {
   padding: 10px;
 }
 
+img {
+  width: 40%;
+}
+
 .pokemon-button {
   border: none;
   font-family: inherit;
@@ -43,6 +73,57 @@ li {
   text-decoration: none;
   text-transform: uppercase;
   padding: 10px;
+}
+
+#modal-container {
+  display: none;
+}
+
+#modal-container.is-visible {
+  position: fixed;
+  padding: 30px;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+
+  z-index: 999;
+
+  overflow: auto;
+
+  display: grid;
+  text-align: center;
+}
+
+.modal {
+  margin: auto;
+  display: inline-block;
+  box-sizing: border-box;
+  background: var(--main-bg-color);
+  padding: 30px;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.modal-close {
+  float: right;
+  -webkit-appearance: none;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--main-txt-color);
+  text-decoration: none;
+}
+
+.pokemonName {
+  margin-top: 0;
+}
+
+.pokemonHeight {
+  margin-bottom: 0;
 }
 
 @media all and (max-width: 580px) {
